@@ -1,0 +1,8 @@
+{
+  "name": "LangChain Instructions",
+  "steps": [
+    "Brug OpenAI GPT-4o til at generere kode",
+    "Følg specifikke regler fra JSON",
+    "Returner altid fejl i et separat objekt"
+  ]
+}
