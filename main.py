@@ -1,16 +1,14 @@
 from fastapi import FastAPI, Request
+import json
 
 app = FastAPI()
 
 @app.post("/api/webhook")
 async def webhook(request: Request):
-    raw_body = await request.body()  # Læs rå body
-    print("🔍 RAW BODY:", raw_body.decode())  # Debug print i logs
-
+    raw_body = await request.body()
+    print(f"🔍 RAW BODY: {raw_body}")  # <-- Debugging
     try:
-        data = await request.json()  # Prøv at parse JSON
-        print("✅ PARSED JSON:", data)  # Debug print
-        return {"status": "success", "received": data}
-    except Exception as e:
-        print("❌ ERROR:", str(e))  # Debug fejl
-        return {"status": "error", "message": str(e), "raw_body": raw_body.decode()}
+        data = json.loads(raw_body.decode("utf-8"))
+    except json.JSONDecodeError:
+        data = None
+    return {"status": "success", "received": data, "generatedCode": "console.log(Hello from CodeHook!);"}
